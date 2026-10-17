@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://bkrdmrcioglu.github.io/poolmind-site/sitemap.xml

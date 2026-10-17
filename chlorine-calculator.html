@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pool Chlorine Calculator — How Much Liquid Chlorine to Add | Poolmind</title>
+<meta name="description" content="Free pool chlorine calculator. Enter your pool size, current and target free chlorine and bleach strength to see exactly how much liquid chlorine to add. Includes the FC/CYA target chart.">
+<link rel="canonical" href="https://bkrdmrcioglu.github.io/poolmind-site/chlorine-calculator.html">
+<meta property="og:title" content="Pool Chlorine Calculator — how much liquid chlorine to add">
+<meta property="og:description" content="Pool size + current and target chlorine = exact dose of bleach or liquid chlorine.">
+<meta property="og:image" content="https://bkrdmrcioglu.github.io/poolmind-site/icon.png">
+<link rel="icon" href="icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "How much liquid chlorine do I add to raise free chlorine by 1 ppm?",
+      "acceptedAnswer": { "@type": "Answer", "text": "In 10,000 gallons, about 12.8 fl oz of 10% liquid chlorine or 21 fl oz of 6% bleach raises free chlorine by 1 ppm." } },
+    { "@type": "Question", "name": "What should my free chlorine level be?",
+      "acceptedAnswer": { "@type": "Answer", "text": "It depends on your stabilizer (CYA). A common target is about 10% of your CYA level plus 1–3 ppm; for example, 6–8 ppm with 50 ppm CYA." } }
+  ]
+}
+</script>
+<style>
+  :root { color-scheme: light dark; --bg:#f6fafc; --card:#fff; --fg:#0d1b26; --muted:#5b6b78; --accent:#007dc7; --line:#dfe7ee; --field:#f0f4f7; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0b141b; --card:#121e27; --fg:#e8f0f5; --muted:#9aabb8; --accent:#40b3eb; --line:#22313c; --field:#1a2731; } }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+  a { color:var(--accent); }
+  .wrap { max-width:760px; margin:0 auto; padding:40px 16px 64px; }
+  h1 { font-size:2rem; line-height:1.2; margin:0 0 8px; letter-spacing:-.02em; }
+  .lead { color:var(--muted); margin:0 0 24px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:20px; }
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+  label { display:block; font-size:.9rem; font-weight:600; margin-bottom:6px; }
+  input, select { width:100%; font:inherit; padding:11px 12px; border-radius:10px; border:1px solid var(--line); background:var(--field); color:var(--fg); }
+  .inline { display:flex; gap:8px; }
+  .inline select { max-width:110px; }
+  .result { margin-top:18px; padding:18px; border-radius:14px; background:rgba(0,125,199,.09); }
+  .result strong { display:block; font-size:1.8rem; color:var(--accent); }
+  .result span { color:var(--muted); font-size:.95rem; }
+  table { width:100%; border-collapse:collapse; margin:12px 0; font-size:.95rem; }
+  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); }
+  h2 { font-size:1.35rem; margin:40px 0 10px; }
+  .cta { margin-top:40px; text-align:center; }
+  .cta a { display:inline-block; background:var(--accent); color:#fff; text-decoration:none; font-weight:700; padding:14px 24px; border-radius:14px; }
+  footer { color:var(--muted); font-size:.9rem; text-align:center; padding:24px 16px 40px; }
+  @media (max-width:520px) { .row { grid-template-columns:1fr; } h1 { font-size:1.6rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Pool chlorine calculator</h1>
+  <p class="lead">How much liquid chlorine or bleach to add to reach your target free chlorine.</p>
+
+  <form class="card" id="calc" onsubmit="return false">
+    <div class="row">
+      <div>
+        <label for="volume">Pool volume</label>
+        <div class="inline">
+          <input id="volume" type="number" inputmode="decimal" min="0" value="15000">
+          <select id="volumeUnit" aria-label="Volume unit">
+            <option value="gal">gal</option>
+            <option value="l">liters</option>
+            <option value="m3">m³</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label for="strength">Chlorine strength on the label</label>
+        <select id="strength">
+          <option value="6">6% (household bleach)</option>
+          <option value="8.25">8.25% (concentrated bleach)</option>
+          <option value="10" selected>10% (pool liquid chlorine)</option>
+          <option value="12.5">12.5% (pool liquid chlorine)</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="current">Current free chlorine (ppm)</label>
+        <input id="current" type="number" inputmode="decimal" min="0" step="0.5" value="2">
+      </div>
+      <div>
+        <label for="target">Target free chlorine (ppm)</label>
+        <input id="target" type="number" inputmode="decimal" min="0" step="0.5" value="6">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="cya">Stabilizer / CYA (optional, ppm)</label>
+        <input id="cya" type="number" inputmode="decimal" min="0" step="10" placeholder="e.g. 50">
+      </div>
+      <div id="cyaHint" style="align-self:end;color:var(--muted);font-size:.95rem"></div>
+    </div>
+    <div class="result" aria-live="polite">
+      <strong id="dose">—</strong>
+      <span id="doseNote">Pour in front of a return jet with the pump running, ideally in the evening.</span>
+    </div>
+  </form>
+
+  <h2>Free chlorine targets by stabilizer (CYA)</h2>
+  <p>Stabilizer protects chlorine from sunlight but also weakens it, so the right chlorine level depends on your CYA.</p>
+  <table>
+    <thead><tr><th>CYA (ppm)</th><th>Minimum FC</th><th>Target FC</th><th>Shock (SLAM) FC</th></tr></thead>
+    <tbody>
+      <tr><td>30</td><td>2</td><td>4–6</td><td>12</td></tr>
+      <tr><td>40</td><td>3</td><td>5–7</td><td>16</td></tr>
+      <tr><td>50</td><td>4</td><td>6–8</td><td>20</td></tr>
+      <tr><td>60</td><td>5</td><td>7–9</td><td>24</td></tr>
+      <tr><td>70</td><td>5</td><td>8–10</td><td>28</td></tr>
+      <tr><td>80</td><td>6</td><td>9–11</td><td>31</td></tr>
+    </tbody>
+  </table>
+  <p>Saltwater pools can run lower: about 4.5% of CYA as a minimum.</p>
+
+  <h2>How the dose is calculated</h2>
+  <p>Liquid chlorine strength is sold as "trade percent": a gallon of 10% chlorine contains enough chlorine to raise 10,000 gallons by about 10 ppm. That works out to about 12.8 fl oz of 10% liquid chlorine, or 21 fl oz of 6% bleach, per ppm in 10,000 gallons. Bleach loses strength as it ages, so old jugs need a little more.</p>
+
+  <h2>Want pH, alkalinity and calcium too?</h2>
+  <p>Poolmind for iPhone does this math for every chemical: acid and soda ash for pH (based on your alkalinity and temperature), baking soda, calcium chloride, stabilizer and salt — plus a test log, charts and water balance (CSI).</p>
+
+  <div class="cta"><a href="https://apps.apple.com/app/idAPP_STORE_ID">Get Poolmind on the App Store</a></div>
+</div>
+<footer><a href="./">Poolmind</a> · <a href="privacy.html">Privacy</a> · Doses are estimates. Follow product labels and retest before adding more.</footer>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const LITERS_PER_GAL = 3.785411784;
+
+  function liters() {
+    const value = parseFloat($("volume").value) || 0;
+    switch ($("volumeUnit").value) {
+      case "gal": return value * LITERS_PER_GAL;
+      case "m3": return value * 1000;
+      default: return value;
+    }
+  }
+
+  function format(doseLiters) {
+    if ($("volumeUnit").value === "gal") {
+      const oz = doseLiters * 1000 / 29.57353;
+      return oz < 128 ? `${oz.toFixed(oz < 10 ? 1 : 0)} fl oz` : `${(doseLiters / LITERS_PER_GAL).toFixed(2)} gal (${Math.round(oz)} fl oz)`;
+    }
+    return doseLiters < 1 ? `${Math.max(5, Math.round(doseLiters * 200) * 5)} mL` : `${doseLiters.toFixed(2)} L`;
+  }
+
+  function update() {
+    const cya = parseFloat($("cya").value);
+    if (cya > 0) {
+      const min = Math.max(1, Math.floor(cya * 0.075 + 0.7));
+      const low = Math.max(3, Math.floor(cya / 10 + 1.5));
+      const high = Math.max(low + 1, Math.floor(cya / 10 + 3.5));
+      $("cyaHint").textContent = `With ${cya} ppm CYA: keep FC ${low}–${high} ppm, never below ${min}.`;
+    } else {
+      $("cyaHint").textContent = "";
+    }
+
+    const delta = (parseFloat($("target").value) || 0) - (parseFloat($("current").value) || 0);
+    const strength = parseFloat($("strength").value);
+    const volume = liters();
+    if (delta <= 0 || volume <= 0) {
+      $("dose").textContent = delta <= 0 ? "No chlorine needed" : "—";
+      return;
+    }
+    // 1 ppm = 1 mg/L; trade percent = grams of available chlorine per 100 mL.
+    const doseLiters = delta * volume / 1000 / (strength * 10);
+    $("dose").textContent = `Add ${format(doseLiters)}`;
+  }
+
+  document.querySelectorAll("#calc input, #calc select").forEach((el) => el.addEventListener("input", update));
+  update();
+</script>
+</body>
+</html>
