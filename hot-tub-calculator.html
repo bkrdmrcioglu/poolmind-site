@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hot Tub Chemical Calculator — How Much Chlorine to Add to a Spa | Poolmind</title>
+<meta name="description" content="Free hot tub chlorine calculator. Enter your spa size, current and target free chlorine to see exactly how much dichlor granules or liquid chlorine to add, plus the ideal hot tub chemistry ranges.">
+<link rel="canonical" href="https://bkrdmrcioglu.github.io/poolmind-site/hot-tub-calculator.html">
+<meta property="og:title" content="Hot Tub Chemical Calculator — how much chlorine to add to your spa">
+<meta property="og:description" content="Spa size + current and target chlorine = exact dose of dichlor or liquid chlorine.">
+<meta property="og:image" content="https://bkrdmrcioglu.github.io/poolmind-site/icon.png">
+<link rel="icon" href="icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "How much dichlor do I add to a hot tub?",
+      "acceptedAnswer": { "@type": "Answer", "text": "In a 400-gallon hot tub, about 2.7 g (0.1 oz) of 56% dichlor granules raises free chlorine by 1 ppm. Most tubs need 3 to 5 ppm after a soak." } },
+    { "@type": "Question", "name": "What should the chlorine level be in a hot tub?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Keep free chlorine around 3 to 5 ppm, with pH 7.4 to 7.8, total alkalinity 50 to 80 ppm and calcium hardness 100 to 250 ppm." } }
+  ]
+}
+</script>
+<style>
+  :root { color-scheme: light dark; --bg:#f6fafc; --card:#fff; --fg:#0d1b26; --muted:#5b6b78; --accent:#007dc7; --line:#dfe7ee; --field:#f0f4f7; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0b141b; --card:#121e27; --fg:#e8f0f5; --muted:#9aabb8; --accent:#40b3eb; --line:#22313c; --field:#1a2731; } }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+  a { color:var(--accent); }
+  .wrap { max-width:760px; margin:0 auto; padding:40px 16px 64px; }
+  h1 { font-size:2rem; line-height:1.2; margin:0 0 8px; letter-spacing:-.02em; }
+  .lead { color:var(--muted); margin:0 0 24px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:20px; }
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+  label { display:block; font-size:.9rem; font-weight:600; margin-bottom:6px; }
+  input, select { width:100%; font:inherit; padding:11px 12px; border-radius:10px; border:1px solid var(--line); background:var(--field); color:var(--fg); }
+  .inline { display:flex; gap:8px; }
+  .inline select { max-width:110px; }
+  .result { margin-top:18px; padding:18px; border-radius:14px; background:rgba(0,125,199,.09); }
+  .result strong { display:block; font-size:1.8rem; color:var(--accent); }
+  .result span { color:var(--muted); font-size:.95rem; }
+  table { width:100%; border-collapse:collapse; margin:12px 0; font-size:.95rem; }
+  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); }
+  h2 { font-size:1.35rem; margin:40px 0 10px; }
+  .cta { margin-top:40px; text-align:center; }
+  .cta a { display:inline-block; background:var(--accent); color:#fff; text-decoration:none; font-weight:700; padding:14px 24px; border-radius:14px; }
+  footer { color:var(--muted); font-size:.9rem; text-align:center; padding:24px 16px 40px; }
+  @media (max-width:520px) { .row { grid-template-columns:1fr; } h1 { font-size:1.6rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Hot tub chemical calculator</h1>
+  <p class="lead">How much dichlor or liquid chlorine to add to your spa to reach your target free chlorine.</p>
+
+  <form class="card" id="calc" onsubmit="return false">
+    <div class="row">
+      <div>
+        <label for="volume">Hot tub volume</label>
+        <div class="inline">
+          <input id="volume" type="number" inputmode="decimal" min="0" value="400">
+          <select id="volumeUnit" aria-label="Volume unit">
+            <option value="gal">gal</option>
+            <option value="l">liters</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label for="product">Chlorine product</label>
+        <select id="product">
+          <option value="dichlor" selected>Dichlor granules (56%)</option>
+          <option value="6">Liquid bleach 6%</option>
+          <option value="10">Liquid chlorine 10%</option>
+          <option value="12.5">Liquid chlorine 12.5%</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="current">Current free chlorine (ppm)</label>
+        <input id="current" type="number" inputmode="decimal" min="0" step="0.5" value="1">
+      </div>
+      <div>
+        <label for="target">Target free chlorine (ppm)</label>
+        <input id="target" type="number" inputmode="decimal" min="0" step="0.5" value="4">
+      </div>
+    </div>
+    <div class="result" aria-live="polite">
+      <strong id="dose">—</strong>
+      <span id="doseNote">Add with the jets running and the cover open, then retest after 20 minutes.</span>
+    </div>
+  </form>
+
+  <h2>Ideal hot tub chemistry</h2>
+  <table>
+    <thead><tr><th>Reading</th><th>Range</th><th>Aim for</th></tr></thead>
+    <tbody>
+      <tr><td>Free chlorine</td><td>3–5 ppm</td><td>4 ppm, more after heavy use</td></tr>
+      <tr><td>pH</td><td>7.4–7.8</td><td>7.6</td></tr>
+      <tr><td>Total alkalinity</td><td>50–80 ppm</td><td>60 ppm</td></tr>
+      <tr><td>Calcium hardness</td><td>100–250 ppm</td><td>150 ppm</td></tr>
+      <tr><td>Stabilizer (CYA)</td><td>20–40 ppm</td><td>30 ppm</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Why hot tubs need more chlorine than you'd think</h2>
+  <p>A hot tub holds a few hundred gallons of 100 °F water shared by several people, so chlorine is used up quickly: one soak can burn through 2–3 ppm. Testing before and adding chlorine after every use keeps the water clear and stops odors.</p>
+  <p>Dichlor is the usual choice for spas because it is pH-neutral and easy to measure, but it also adds stabilizer: about 0.9 ppm of CYA for every 1 ppm of chlorine. Once CYA climbs past 40–50 ppm, switch to liquid chlorine for a while or drain and refill, which most owners do every 3–4 months anyway.</p>
+
+  <h2>Want pH and alkalinity doses too?</h2>
+  <p>Poolmind for iPhone tracks your hot tub and pool together: chlorine and pH doses for free, and in Pro alkalinity, calcium, water balance, charts and test reminders.</p>
+
+  <div class="cta"><a href="https://apps.apple.com/app/id6824066432">Get Poolmind on the App Store</a></div>
+</div>
+<footer><a href="./">Poolmind</a> · <a href="chlorine-calculator.html">Pool chlorine calculator</a> · <a href="privacy.html">Privacy</a> · Doses are estimates. Follow product labels and retest before adding more.</footer>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const LITERS_PER_GAL = 3.785411784;
+
+  function liters() {
+    const value = parseFloat($("volume").value) || 0;
+    return $("volumeUnit").value === "gal" ? value * LITERS_PER_GAL : value;
+  }
+
+  function update() {
+    const delta = (parseFloat($("target").value) || 0) - (parseFloat($("current").value) || 0);
+    const volume = liters();
+    if (delta <= 0 || volume <= 0) {
+      $("dose").textContent = delta <= 0 ? "No chlorine needed" : "—";
+      return;
+    }
+    // 1 ppm = 1 mg/L of available chlorine.
+    const chlorineGrams = delta * volume / 1000;
+    const product = $("product").value;
+    const imperial = $("volumeUnit").value === "gal";
+    if (product === "dichlor") {
+      // Sodium dichloroisocyanurate dihydrate: 55.4% available chlorine.
+      const grams = chlorineGrams / 0.554;
+      $("dose").textContent = imperial
+        ? `Add ${(grams / 28.349523).toFixed(2)} oz (${grams.toFixed(1)} g)`
+        : `Add ${grams.toFixed(1)} g`;
+    } else {
+      // Trade percent = grams of available chlorine per 100 mL.
+      const ml = chlorineGrams / (parseFloat(product) / 100);
+      $("dose").textContent = imperial
+        ? `Add ${(ml / 29.57353).toFixed(1)} fl oz`
+        : `Add ${Math.round(ml)} mL`;
+    }
+  }
+
+  document.querySelectorAll("#calc input, #calc select").forEach((el) => el.addEventListener("input", update));
+  update();
+</script>
+</body>
+</html>
